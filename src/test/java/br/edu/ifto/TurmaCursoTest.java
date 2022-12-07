@@ -17,7 +17,11 @@ public class TurmaCursoTest {
     }
 
     private EstudantesMatriculados getValidEstudanteMatriculado() {
-        return new EstudantesMatriculados( "2022010", LocalDate.parse("2022-02-01"));
+        return new EstudantesMatriculados(
+                new Estudante("Guilherme", "2022010", LocalDate.parse("2003-05-13"), "210 sul", "guilherme.milhomem2@estudante.ifto.edu.br"),
+                getValidTurma(),
+                LocalDate.parse("2022-02-01")
+        );
     }
 
     @Test
@@ -35,7 +39,7 @@ public class TurmaCursoTest {
     }
 
     @Test
-    @DisplayName("Valida se adiciona um estudade à turma")
+    @DisplayName("Valida se adiciona um estudade à turma e diminui vagas disponiveis")
     public void shouldAddEstudante() {
         EstudantesMatriculados estudantesMatriculados = getValidEstudanteMatriculado();
         TurmaCurso turmaCurso = getValidTurma();
@@ -58,15 +62,22 @@ public class TurmaCursoTest {
     }
 
     @Test
-    @DisplayName("valida se não é possível matricular na turma")
+    @DisplayName("valida se não é possível matricular estudantes na turma")
+    public void shouldCanMatriculate() {
+        TurmaCurso turmaCurso = getValidTurma();
+        assertTrue( turmaCurso.podeMatricular() );
+    }
+
+    @Test
+    @DisplayName("valida se é possível matricular estudantes na turma")
     public void shouldCannotMatriculate() {
-        TurmaCurso turmaCurso = new TurmaCurso("IFTO", 40, LocalDate.parse("2022-02-01"), LocalDate.parse("2022-12-01"), LocalDate.parse("2023-01-01"), LocalDate.parse("2023-12-31"));
+        TurmaCurso turmaCurso = getInvalidTurma();
         assertFalse( turmaCurso.podeMatricular() );
 
-        TurmaCurso turmaCurso2 = new TurmaCurso("IFTO", 40, LocalDate.parse("2022-02-01"), LocalDate.parse("2022-12-01"), LocalDate.parse("2022-01-01"), LocalDate.parse("2022-06-30"));
+        TurmaCurso turmaCurso2 = new TurmaCurso("IFTO", 40, LocalDate.parse("2022-02-01"), LocalDate.parse("2022-12-01"), LocalDate.parse("2023-01-01"), LocalDate.parse("2023-12-31"));
         assertFalse( turmaCurso2.podeMatricular() );
 
-        TurmaCurso turmaCurso3 = getInvalidTurma();
+        TurmaCurso turmaCurso3 = new TurmaCurso("IFTO", 40, LocalDate.parse("2022-02-01"), LocalDate.parse("2022-12-01"), LocalDate.parse("2022-01-01"), LocalDate.parse("2022-06-30"));
         assertFalse( turmaCurso3.podeMatricular() );
     }
 

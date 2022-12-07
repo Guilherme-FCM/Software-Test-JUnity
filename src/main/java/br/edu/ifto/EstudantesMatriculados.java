@@ -1,25 +1,21 @@
 package br.edu.ifto;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class EstudantesMatriculados {
   private LocalDate dataMatricula;
-  private String matricula;
+  private Estudante estudante;
+  private TurmaCurso turmaCurso;
 
-  public EstudantesMatriculados(String matricula, LocalDate dataMatricula) {
-    this.matricula = matricula;
+  public EstudantesMatriculados(Estudante estudante, TurmaCurso turmaCurso, LocalDate dataMatricula) {
+    this.estudante = estudante;
+    this.turmaCurso = turmaCurso;
     this.dataMatricula = dataMatricula;
   }
 
-  public List<Estudante> getMatriculados() {
-    return new ArrayList<>();
-  }
-
   public boolean isValid() {
-    return this.matricula != null &&
-      !this.matricula.isBlank() &&
+    return this.estudante != null &&
+      this.turmaCurso != null &&
       this.dataMatricula != null;
   }
 }
